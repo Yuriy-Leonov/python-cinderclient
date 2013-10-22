@@ -132,7 +132,7 @@ class VolumeManager(base.ManagerWithFind):
 
     def create(self, size, snapshot_id=None, source_volid=None,
                display_name=None, display_description=None,
-               volume_type=None, user_id=None,
+               volume_type=None, user_id=None, required_qos=None,
                project_id=None, availability_zone=None,
                metadata=None, imageRef=None):
         """
@@ -149,6 +149,9 @@ class VolumeManager(base.ManagerWithFind):
         :param metadata: Optional metadata to set on volume creation
         :param imageRef: reference to an image stored in glance
         :param source_volid: ID of source volume to clone from
+        :param required_qos: (optional extension) specify required
+               Quality of Service level
+               values are: platinum, gold, bronze
         :rtype: :class:`Volume`
         """
 
@@ -170,6 +173,7 @@ class VolumeManager(base.ManagerWithFind):
                            'metadata': volume_metadata,
                            'imageRef': imageRef,
                            'source_volid': source_volid,
+                           'required_qos': required_qos,
                            }}
         return self._create('/volumes', body, 'volume')
 

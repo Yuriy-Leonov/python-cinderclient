@@ -201,6 +201,12 @@ def do_show(cs, args):
     default=None,
     help='Create volume from snapshot id (Optional, Default=None)')
 @utils.arg(
+    '--required_qos',
+    metavar='<required_qos>',
+    default=None,
+    help='Specify Quolity of Service level:'
+         'platinum, gold or bronze')
+@utils.arg(
     '--snapshot_id',
     help=argparse.SUPPRESS)
 @utils.arg(
@@ -273,6 +279,7 @@ def do_create(cs, args):
                                args.volume_type,
                                availability_zone=args.availability_zone,
                                imageRef=args.image_id,
+                               required_qos=args.required_qos,
                                metadata=volume_metadata)
     _print_volume(volume)
 

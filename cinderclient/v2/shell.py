@@ -201,6 +201,12 @@ def do_show(cs, args):
            metavar='<snapshot-id>',
            default=None,
            help='Create volume from snapshot id (Optional, Default=None)')
+@utils.arg(
+    '--required_qos',
+    metavar='<required_qos>',
+    default=None,
+    help='Specify Quolity of Service level:'
+         'platinum, gold or bronze')
 @utils.arg('--snapshot_id',
            help=argparse.SUPPRESS)
 @utils.arg('--source-volid',
@@ -293,6 +299,7 @@ def do_create(cs, args):
                                availability_zone=args.availability_zone,
                                imageRef=args.image_id,
                                metadata=volume_metadata,
+                               required_qos=args.required_qos,
                                scheduler_hints=hints)
 
     info = dict()

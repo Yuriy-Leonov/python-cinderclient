@@ -127,7 +127,7 @@ class VolumeManager(base.ManagerWithFind):
     resource_class = Volume
 
     def create(self, size, snapshot_id=None, source_volid=None,
-               name=None, description=None,
+               name=None, description=None, required_qos=None,
                volume_type=None, user_id=None,
                project_id=None, availability_zone=None,
                metadata=None, imageRef=None, scheduler_hints=None):
@@ -146,8 +146,11 @@ class VolumeManager(base.ManagerWithFind):
         :param source_volid: ID of source volume to clone from
         :param scheduler_hints: (optional extension) arbitrary key-value pairs
                             specified by the client to help boot an instance
+        :param required_qos: (optional extension) specify required
+               Quality of Service level
+               values are: platinum, gold, bronze
         :rtype: :class:`Volume`
-       """
+        """
 
         if metadata is None:
             volume_metadata = {}
@@ -168,6 +171,7 @@ class VolumeManager(base.ManagerWithFind):
                            'imageRef': imageRef,
                            'source_volid': source_volid,
                            'scheduler_hints': scheduler_hints,
+                           'required_qos': required_qos,
                            }}
         return self._create('/volumes', body, 'volume')
 
